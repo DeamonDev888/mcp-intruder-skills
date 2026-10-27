@@ -1,0 +1,3 @@
+.upstream/
+.gen_tmp/
+*.tar.gz
