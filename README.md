@@ -18,6 +18,7 @@ avec un **tooling 100 % Rust** (`cli/` — aucune dépendance bash/Python).
 | Skills optionnels | 201 | 38 BugHunter + packs ACS OT/ICS (29), Red Team (35), Cloud (66), Container (33) |
 | Commands slash | 15 | `/hunt /recon /surface /scope /triage /validate /report /chain /intel …` |
 | CLI Rust `mcp-intruder-cli` | 5 commandes | install · check-prereqs · scan-secrets · index · build |
+| Feuille de route MCP | — | [MCP-ROADMAP.md](MCP-ROADMAP.md) — les ~25 outils MCP planifiés pour `mcp_intruder` (P0→P3) |
 | Mappings | 3 | ATT&CK Navigator layer, NIST CSF, OWASP Top 10 (ACS `mappings/`) |
 
 - **Catalogue lisible :** [INDEX.md](INDEX.md) — chaque skill avec son déclencheur (frontmatter réel).
