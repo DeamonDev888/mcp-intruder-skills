@@ -1,24 +1,23 @@
 # MCP-INTRUDER SKILLS — Bundle d'adoption (catalogue schématisé)
 
-**Généré le 2026-10-26** — sélections issues de audit local AUDIT-OUTILS-MCP-SKILLS-2026-10-26.md (non publié) §5.2.
+**Généré par `mcp-intruder-cli index`** — sélections issues de l'audit local `AUDIT-OUTILS-MCP-SKILLS-2026-10-26.md` §5.2 (non publié).
 
 | Source | Tier 1 | Optionnel | Licence |
 |---|---|---|---|
 | [Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter) @ `6a153f7` | 45 | 38 | MIT + CC BY 4.0 |
 | [Anthropic-Cybersecurity-Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills) @ `54a7988` | 94 | 163 | Apache-2.0 |
-| **Total** | **139** | **201** | + 15 commands slash + CLI cbh + mappings MITRE/NIST/OWASP |
+| **Total** | **139** | **201** | + 15 commands slash + mappings MITRE/NIST/OWASP |
 
 ## Architecture du bundle
 ```
 mcp-intruder-skills/
-├── bughunter/            Tier 1 (45 skills) + commands/ (15) + cbh/ (CLI) + scripts/cbh.py
+├── cli/                  Outil Rust unique (install · check-prereqs · scan-secrets · index · build)
+├── bughunter/            Tier 1 (45 skills) + commands/ (15) + licences MIT/CC-BY
 ├── acs/                  Tier 1 (94 skills) + mappings/ (ATT&CK Navigator, NIST CSF, OWASP)
-├── optional/             Packs opt-in (bughunter 38 · acs-ot-ics 29 · acs-red-team 35 · acs-cloud 66 · acs-container 33)
-├── install.sh            Déploiement → ~/.claude/skills (Kali) ou --target <dir>
-├── check_prereqs.sh      Vérifie les exigences outils des skills
-├── tools-requirements.md Matrice exigences/écart vs serveur Kali votre-serveur-kali
+├── optional/             Packs opt-in (bughunter · acs-ot-ics · acs-red-team · acs-cloud · acs-container)
+├── assets/               banner-mcp-intruder.png
 ├── skills-manifest.json  Catalogue machine (id, source, catégorie, tier, description)
-└── BUILD-REPORT.md       Journal de construction
+└── INDEX.md              Ce catalogue
 ```
 
 ## Mécanisme de déclenchement
@@ -31,13 +30,13 @@ Chaque `SKILL.md` porte un frontmatter YAML ; le champ `description` sert de dé
 | Skill | Déclencheur (frontmatter) |
 |---|---|
 | `bb-methodology` | Use at the START of any bug bounty hunting session, when switching targets, or when feeling lost about what to do next. Master orchestrator that combines the 5-phase non-linear hunting workflow with the critical thinking framework (develope |
-| `bug-bounty` | Complete bug bounty workflow — recon (subdomain enumeration, asset discovery, fingerprinting, HackerOne scope, source code audit), pre-hunt learning (disclosed reports, tech stack research, mind maps, threat modeling), vulnerability hunti |
+| `bug-bounty` | Complete bug bounty workflow — recon (subdomain enumeration, asset discovery, fingerprinting, HackerOne scope, source code audit), pre-hunt learning (disclosed reports, tech stack research, mind maps, threat modeling), vulnerability hunting |
 | `bugcrowd-reporting` | Bugcrowd-specific reporting tactics complementing report-writing: VRT category search-and-fallback strategy when no exact match exists, manual severity override when VRT defaults underrate impact, severity-request paragraph as first body se |
 | `evidence-hygiene` | Evidence-capture and PoC-redaction discipline for bug-bounty submissions: cookie redaction protocol (which fields to mask, Preview annotation / Burp panel hiding / DevTools workflow), PII black-bar discipline (what to mask in other-user dat |
-| `redteam-mindset` | Red-team operator discipline — the mindset corrections that separate offensive testing from defensive WAPT. Built from authorized red-team work where conservative defaults caused multiple findings to be missed and one to be incorrectly re |
-| `redteam-report-template` | Client-facing red-team deliverable format — codifies the Subject / Observations / Description / Impact / Recommendation / PoC structure used for external red-team engagements (not bug-bounty platform reports). Different audience, differen |
-| `report-writing` | Bug bounty report writing for H1/Bugcrowd/Intigriti/Immunefi — report templates, human tone guidelines, impact-first writing, CVSS 3.1 scoring, title formula, impact statement formula, severity decision guide, downgrade counters, pre-subm |
-| `triage-validation` | Finding validation before writing any report — 7-Question Gate (all 7 questions), 4 pre-submission gates, always-rejected list, conditionally valid with chain table, CVSS 3.1 quick reference, severity decision guide, report title formula, |
+| `redteam-mindset` | Red-team operator discipline — the mindset corrections that separate offensive testing from defensive WAPT. Built from authorized red-team work where conservative defaults caused multiple findings to be missed and one to be incorrectly retr |
+| `redteam-report-template` | Client-facing red-team deliverable format — codifies the Subject / Observations / Description / Impact / Recommendation / PoC structure used for external red-team engagements (not bug-bounty platform reports). Different audience, different  |
+| `report-writing` | Bug bounty report writing for H1/Bugcrowd/Intigriti/Immunefi — report templates, human tone guidelines, impact-first writing, CVSS 3.1 scoring, title formula, impact statement formula, severity decision guide, downgrade counters, pre-submit |
+| `triage-validation` | Finding validation before writing any report — 7-Question Gate (all 7 questions), 4 pre-submission gates, always-rejected list, conditionally valid with chain table, CVSS 3.1 quick reference, severity decision guide, report title formula, 6 |
 
 ## BUGHUNTER · Recon & OSINT (5)
 
@@ -45,44 +44,44 @@ Chaque `SKILL.md` porte un frontmatter YAML ; le champ `description` sert de dé
 |---|---|
 | `offensive-osint` | Operational arsenal for authorized external red-team and bug-bounty recon. Concrete probes, wordlists, regexes, dorks, curl one-liners for: subdomain enum, GraphQL/Swagger/REST discovery, identity fabric (Entra/Okta/ADFS/Google/SAML/M365 de |
 | `osint-methodology` | Comprehensive OSINT methodology for external red-team operations and authorized attack-surface assessments. Covers the 5-stage recon pipeline (seed discovery, asset expansion, enrichment, exposure analysis, reporting), asset-graph disciplin |
-| `recon-scope-triage` | Triage ASM/recon output for ownership before testing — separate the target's real assets from namespace-collision noise. Automated recon keyword-matches on the brand name, so for any target whose name is a common/dictionary word, the outp |
+| `recon-scope-triage` | Triage ASM/recon output for ownership before testing — separate the target's real assets from namespace-collision noise. Automated recon keyword-matches on the brand name, so for any target whose name is a common/dictionary word, the output |
 | `security-arsenal` | Security payloads, bypass tables, wordlists, gf pattern names, always-rejected bug list, and conditionally-valid-with-chain table. Use when you need specific payloads for XSS/SSRF/SQLi/XXE/NoSQLi/command injection/SSTI/IDOR/path-traversal/H |
-| `web2-recon` | Web2 recon pipeline — subdomain enumeration (subfinder, Chaos API, assetfinder), live host discovery (dnsx, httpx), URL crawling (katana, waybackurls, gau), directory fuzzing (ffuf), JS analysis (LinkFinder, SecretFinder), continuous moni |
+| `web2-recon` | Web2 recon pipeline — subdomain enumeration (subfinder, Chaos API, assetfinder), live host discovery (dnsx, httpx), URL crawling (katana, waybackurls, gau), directory fuzzing (ffuf), JS analysis (LinkFinder, SecretFinder), continuous monito |
 
 ## BUGHUNTER · hunt-* — classes de vulnérabilités (32)
 
 | Skill | Déclencheur (frontmatter) |
 |---|---|
-| `hunt-ato` | Hunt account takeover taxonomy — 9 distinct paths to ATO, plus chains. Paths: (1) password reset flaws (host-header injection redirects token, predictable/numeric token, Referer leak, no-expiry/reuse), (2) email change without re-auth, (3 |
+| `hunt-ato` | Hunt account takeover taxonomy — 9 distinct paths to ATO, plus chains. Paths: (1) password reset flaws (host-header injection redirects token, predictable/numeric token, Referer leak, no-expiry/reuse), (2) email change without re-auth, (3)  |
 | `hunt-auth-bypass` | Hunting skill for auth bypass vulnerabilities. Built from 12 public bug bounty reports across SAML XSW / parser-differential (GitHub Enterprise CVE-2025-25291/25292), SAML signature stripping (Uber, Rocket.Chat, samlify CVE-2025-47949), SAM |
 | `hunt-business-logic` | Hunting skill for business logic vulnerabilities. Built from 12 public bug bounty reports. Covers coupon-race-stacking (Instacart, Stripe, Reverb), negative-quantity-in-cart price tampering (Upserve, Eternal/Zomato), decimal/fraction price- |
-| `hunt-cache-poison` | Hunting skill for cache poison vulnerabilities. Built from 10 public bug bounty reports including X-Forwarded-Host poisoning, X-HTTP-Method-Override / GCS cache, reflected→stored XSS via cache, classic Omer-Gil Web Cache Deception, Cloudf |
-| `hunt-cors` | Hunt CORS Misconfiguration — origin-reflection with credentials, null-origin trust, subdomain-regex bypass (unanchored vs unescaped-dot vs prefix-only), pre-flight (OPTIONS) gating bypass, postMessage origin checks. High only when an atta |
-| `hunt-deserialization` | Hunt Insecure Deserialization — Java gadget chains (ysoserial), PHP object injection (phpggc), Python pickle RCE, .NET BinaryFormatter, Ruby Marshal.load, JNDI/Log4Shell. RCE via deserialization is almost always Critical. Use when target  |
-| `hunt-file-upload` | Hunt file upload bugs — RCE via webshell, XSS via SVG/HTML, SSRF via XXE in DOCX, path traversal via filename. Bypass tables (10 techniques): double extension (shell.php.jpg if server checks last ext only), magic bytes spoofing (PNG heade |
+| `hunt-cache-poison` | Hunting skill for cache poison vulnerabilities. Built from 10 public bug bounty reports including X-Forwarded-Host poisoning, X-HTTP-Method-Override / GCS cache, reflected→stored XSS via cache, classic Omer-Gil Web Cache Deception, Cloudfla |
+| `hunt-cors` | Hunt CORS Misconfiguration — origin-reflection with credentials, null-origin trust, subdomain-regex bypass (unanchored vs unescaped-dot vs prefix-only), pre-flight (OPTIONS) gating bypass, postMessage origin checks. High only when an attack |
+| `hunt-deserialization` | Hunt Insecure Deserialization — Java gadget chains (ysoserial), PHP object injection (phpggc), Python pickle RCE, .NET BinaryFormatter, Ruby Marshal.load, JNDI/Log4Shell. RCE via deserialization is almost always Critical. Use when target ru |
+| `hunt-file-upload` | Hunt file upload bugs — RCE via webshell, XSS via SVG/HTML, SSRF via XXE in DOCX, path traversal via filename. Bypass tables (10 techniques): double extension (shell.php.jpg if server checks last ext only), magic bytes spoofing (PNG header  |
 | `hunt-graphql` | Hunting skill for graphql vulnerabilities. Built from 12 public bug bounty reports across IDOR via node() / GID, mutation IDOR including AI/LLM features, cross-tenant IDOR, SSRF via argument, batching-DoS, query-cost-bypass, SQLi via argume |
-| `hunt-host-header` | Hunt Host Header Injection — password reset poisoning → ATO, web cache poisoning via unkeyed Host/X-Forwarded-Host, routing-based SSRF (Host picks upstream → cloud metadata/internal services), path-override SSRF/ACL-bypass (X-Original |
+| `hunt-host-header` | Hunt Host Header Injection — password reset poisoning → ATO, web cache poisoning via unkeyed Host/X-Forwarded-Host, routing-based SSRF (Host picks upstream → cloud metadata/internal services), path-override SSRF/ACL-bypass (X-Original-URL/X |
 | `hunt-http-smuggling` | Hunt HTTP request smuggling (CL.TE, TE.CL, H2.CL, H2.TE). Cause: front-end proxy and back-end server disagree on where one request ends and the next begins (Content-Length vs Transfer-Encoding header parsing inconsistency). CL.TE: front-end |
 | `hunt-idor` | Hunting skill for idor vulnerabilities. Built from 26 public bug bounty reports. Use when hunting idor on any target. |
-| `hunt-jwt-crypto` | Hunt JWT cryptographic failures — alg:none signature-stripping and RS256→HS256 key-confusion that let an attacker forge a token for any identity (e.g. an admin) without knowing a secret. Use when the app authenticates with a JSON Web To |
-| `hunt-lfi` | Hunt Local File Inclusion (LFI), Remote File Inclusion (RFI), and Path Traversal — /etc/passwd read, log poisoning → RCE, PHP filter-chain RCE (no upload needed), php:// / data:// / zip:// / phar:// wrappers, RFI via allow_url_include,  |
-| `hunt-llm-ai` | Hunt LLM/AI feature bugs — prompt injection, indirect injection, exfiltration via tool-use/markdown, ASCII smuggling, agentic AI security (OWASP Agentic Apps 2026, ASI01-ASI10). Patterns: direct injection ('ignore previous instructions'), |
-| `hunt-mfa-bypass` | Hunt MFA / 2FA bypass — 7 distinct patterns. (1) MFA not enforced on sensitive endpoints (password change, email change accept without MFA challenge), (2) MFA-step skip via direct navigation to post-login URL, (3) MFA-token replay (same c |
+| `hunt-jwt-crypto` | Hunt JWT cryptographic failures — alg:none signature-stripping and RS256→HS256 key-confusion that let an attacker forge a token for any identity (e.g. an admin) without knowing a secret. Use when the app authenticates with a JSON Web Token  |
+| `hunt-lfi` | Hunt Local File Inclusion (LFI), Remote File Inclusion (RFI), and Path Traversal — /etc/passwd read, log poisoning → RCE, PHP filter-chain RCE (no upload needed), php:// / data:// / zip:// / phar:// wrappers, RFI via allow_url_include, dire |
+| `hunt-llm-ai` | Hunt LLM/AI feature bugs — prompt injection, indirect injection, exfiltration via tool-use/markdown, ASCII smuggling, agentic AI security (OWASP Agentic Apps 2026, ASI01-ASI10). Patterns: direct injection ('ignore previous instructions'), i |
+| `hunt-mfa-bypass` | Hunt MFA / 2FA bypass — 7 distinct patterns. (1) MFA not enforced on sensitive endpoints (password change, email change accept without MFA challenge), (2) MFA-step skip via direct navigation to post-login URL, (3) MFA-token replay (same cod |
 | `hunt-oauth` | Hunting skill for oauth vulnerabilities. Built from 19 public bug bounty reports. Use when hunting oauth on any target. |
-| `hunt-open-redirect` | Hunt Open Redirect — all types including low-impact, chained to OAuth token theft → ATO, phishing chains. URL parameter manipulation, JavaScript redirect, meta refresh, header injection. Use when hunting redirect bugs or building ATO ch |
-| `hunt-race-condition` | Hunting skill for race condition vulnerabilities. Built from 12 public bug bounty reports including modern HTTP/2 single-packet attack cases (James Kettle DEF CON 2023 Smashing the State Machine; RyotaK / Flatt Security 10,000-request first |
+| `hunt-open-redirect` | Hunt Open Redirect — all types including low-impact, chained to OAuth token theft → ATO, phishing chains. URL parameter manipulation, JavaScript redirect, meta refresh, header injection. Use when hunting redirect bugs or building ATO chains |
+| `hunt-race-condition` | Hunting skill for race condition vulnerabilities. Built from 12 public bug bounty reports including modern HTTP/2 single-packet attack cases (James Kettle DEF CON 2023 "Smashing the State Machine"; RyotaK / Flatt Security 10,000-request fir |
 | `hunt-rce` | Hunting skill for rce vulnerabilities. Built from 67 public bug bounty reports. Use when hunting rce on any target. |
-| `hunt-saml` | Hunt SAML / SSO attacks. Patterns: XML Signature Wrapping (XSW) — modify Assertion while keeping Signature valid by relocating signed element, comment injection in NameID (admin@target.com<!--evil-->@attacker.com → some parsers see admi |
-| `hunt-session` | Hunt Session Management vulnerabilities — session fixation (no regeneration on login), insufficient invalidation on logout / password-change / email-change, predictable or low-entropy session IDs, JWT-as-session with no exp/revocation, re |
-| `hunt-shadow-api` | Hunt shadow / zombie / undocumented API surface (OWASP API9 Improper Inventory Management) — enumerate the full API version history (v1/v2/beta/legacy paths, header- and subdomain-based versioning), pull and diff every reachable OpenAPI/S |
-| `hunt-source-leak` | Hunt source code and build artifact leakage — JavaScript source maps (.js.map) reconstructing TypeScript/ES6 source, Swagger/OpenAPI JSON endpoint discovery, .env/.git exposure, webpack chunks with hardcoded secrets, robots.txt/security.t |
-| `hunt-spa-api` | Discover a single-page-app's hidden backend API from its public JS bundle, then test that API for broken access control / missing authentication. One of the highest-yield web plays in modern recon — SPAs ship their entire backend route ma |
+| `hunt-saml` | Hunt SAML / SSO attacks. Patterns: XML Signature Wrapping (XSW) — modify Assertion while keeping Signature valid by relocating signed element, comment injection in NameID (admin@target.com<!--evil-->@attacker.com → some parsers see admin@ta |
+| `hunt-session` | Hunt Session Management vulnerabilities — session fixation (no regeneration on login), insufficient invalidation on logout / password-change / email-change, predictable or low-entropy session IDs, JWT-as-session with no exp/revocation, refr |
+| `hunt-shadow-api` | Hunt shadow / zombie / undocumented API surface (OWASP API9 Improper Inventory Management) — enumerate the full API version history (v1/v2/beta/legacy paths, header- and subdomain-based versioning), pull and diff every reachable OpenAPI/Swa |
+| `hunt-source-leak` | Hunt source code and build artifact leakage — JavaScript source maps (.js.map) reconstructing TypeScript/ES6 source, Swagger/OpenAPI JSON endpoint discovery, .env/.git exposure, webpack chunks with hardcoded secrets, robots.txt/security.txt |
+| `hunt-spa-api` | Discover a single-page-app's hidden backend API from its public JS bundle, then test that API for broken access control / missing authentication. One of the highest-yield web plays in modern recon — SPAs ship their entire backend route map  |
 | `hunt-sqli` | Hunting skill for sqli vulnerabilities. Built from 12 public bug bounty reports including modern NoSQL injection (Rocket.Chat CVE-2021-22911 MongoDB $regex, Mongoose ORM CVE-2024-53900 $where bypass), modern ORM raw-fragment SQLi (Django CV |
 | `hunt-ssrf` | Hunting skill for ssrf vulnerabilities. Built from 15 public bug bounty reports including AWS metadata SSRF (HackerOne $25k Analytics PDF, Shopify Exchange $25k, Capital One 106M-record breach, Dropbox/HelloSign $4,913), GCP metadata SSRF ( |
 | `hunt-ssti` | Hunt server-side template injection (SSTI) across Jinja2 (Flask/Django), Twig (Symfony), Freemarker (Java), ERB (Rails), Spring, Velocity, Mako, Thymeleaf, Smarty. Detection probes use double-curly and dollar-curly math expressions evaluate |
-| `hunt-subdomain` | Hunting skill for subdomain takeover vulnerabilities. Includes modern provider fingerprints — Microsoft Azure DevOps `cloudapp.azure.com` regional-pool re-issue (1-click OAuth ATO via wildcard `reply_to`, Binary Security), Zendesk help-de |
-| `hunt-tls-network` | Hunt TLS/SSL and DNS misconfigurations — missing HSTS (downgrade attack), weak cipher suites, expired/invalid certificates, mTLS bypass, missing SPF/DKIM/DMARC (email spoofing), DNS Zone Transfer (AXFR), dangling CNAME subdomain takeover, |
-| `hunt-websocket` | Hunt WebSocket vulnerabilities — Cross-Site WebSocket Hijacking (CSWSH), missing/weak Origin validation on the WS handshake, no per-message authentication, message tampering, socket.io namespace/room authorization bypass, and handshake-la |
+| `hunt-subdomain` | Hunting skill for subdomain takeover vulnerabilities. Includes modern provider fingerprints — Microsoft Azure DevOps `cloudapp.azure.com` regional-pool re-issue (1-click OAuth ATO via wildcard `reply_to`, Binary Security), Zendesk help-desk |
+| `hunt-tls-network` | Hunt TLS/SSL and DNS misconfigurations — missing HSTS (downgrade attack), weak cipher suites, expired/invalid certificates, mTLS bypass, missing SPF/DKIM/DMARC (email spoofing), DNS Zone Transfer (AXFR), dangling CNAME subdomain takeover, C |
+| `hunt-websocket` | Hunt WebSocket vulnerabilities — Cross-Site WebSocket Hijacking (CSWSH), missing/weak Origin validation on the WS handshake, no per-message authentication, message tampering, socket.io namespace/room authorization bypass, and handshake-laye |
 | `hunt-xss` | Hunting skill for xss vulnerabilities. Built from 174 public bug bounty reports. Use when hunting xss on any target. For markup injection that reflects raw HTML but does NOT execute JavaScript (no `<script>`/event-handler execution), see hu |
 | `hunt-xxe` | Hunting skill for xxe vulnerabilities. Built from 10 public bug bounty reports including SVG-upload XXE, Office-doc (PPTX/DOCX) XXE, SOAP XXE, SAML AssertionConsumer XXE, blind OOB XXE via DTD callback, parameter-entity XXE, XXE-to-LFI, XXE |
 
@@ -91,10 +90,10 @@ Chaque `SKILL.md` porte un frontmatter YAML ; le champ `description` sert de dé
 | Commande | Rôle |
 |---|---|
 | `/hunt <target>` | Méta-routeur Red Team vs WAPT, charge le bon set de skills |
-| `/recon <target>` | Recon (support déterministe via CLI cbh) |
+| `/recon <target>` | Recon déterministe (subfinder/crt.sh/probes HTTP) |
 | `/surface <target>` | Surface d'attaque classée P1/P2/Kill |
 | `/scope <asset>` | Gate de scope déterministe avant tout toucher HTTP |
-| `/triage` / `/validate` | 7-Question Gate : PASS/KILL/DOWNGRADE/CHAIN-REQUIRED |
+| `/triage · /validate` | 7-Question Gate : PASS/KILL/DOWNGRADE/CHAIN-REQUIRED |
 | `/report` | Rapport H1/Bugcrowd/Intigriti/Immunefi + CVSS |
 | `/chain` | Chaînes d'exploit A→B (17+ patterns), timeboxing 20 min |
 | `/intel <target>` | CVE NVD + rapports divulgués Hacktivity |
@@ -105,7 +104,7 @@ Chaque `SKILL.md` porte un frontmatter YAML ; le champ `description` sert de dé
 | `/token-scan` | Scan rug-pull EVM/Solana (8 classes) |
 | `/web3-audit` | Audit smart contract 10 classes + PoC Foundry |
 
-**CLI cbh** (python3 ≥3.9, stdlib) : `python3 bughunter/scripts/cbh.py recon|surface|classify|triage|report <args>` — index : `bughunter/cbh/data/skill_index.json`.
+Les commands sont des prompts autonomes : elles fonctionnent sans CLI externe (le tooling du bundle est Rust : `mcp-intruder-cli`).
 
 ---
 
@@ -152,7 +151,7 @@ Chaque `SKILL.md` porte un frontmatter YAML ; le champ `description` sert de dé
 | `testing-for-business-logic-vulnerabilities` | Manually identifies flaws in application business logic - price manipulation, multi-step workflow bypass, and privilege escalation - by intercepting and modifying requests with Burp Suite, going beyond what automated vulnerability scanners  |
 | `testing-for-email-header-injection` | Tests web application email functionality (contact forms, password reset, newsletter subscriptions) for CRLF/SMTP header injection using Burp Suite and OWASP ZAP, checking whether attackers can inject headers, modify recipients, or abuse fo |
 | `testing-for-host-header-injection` | Test web applications for HTTP Host header injection vulnerabilities to identify password reset poisoning, web cache poisoning, SSRF, and virtual host routing manipulation risks. |
-| `testing-for-json-web-token-vulnerabilities` | Tests JWT implementations for algorithm confusion, none algorithm bypass, kid/jku parameter injection, and weak secret exploitation using jwt_tool and Burp Suite's JWT Editor extension, aiming to achieve authentication bypass and privilege  |
+| `testing-for-json-web-token-vulnerabilities` | Tests JWT implementations for algorithm confusion, "none" algorithm bypass, kid/jku parameter injection, and weak secret exploitation using jwt_tool and Burp Suite's JWT Editor extension, aiming to achieve authentication bypass and privileg |
 | `testing-for-open-redirect-vulnerabilities` | Identifies and exploits open redirect vulnerabilities by analyzing URL redirection parameters (next, url, redirect, return, goto), applying bypass techniques, and chaining findings into phishing or token-theft exploits, using Burp Suite/OWA |
 | `testing-for-sensitive-data-exposure` | Identifying sensitive data exposure vulnerabilities including API key leakage, PII in responses, insecure storage, and unprotected data transmission during security assessments. |
 | `testing-for-xml-injection-vulnerabilities` | Test web applications for XML injection vulnerabilities including XXE, XPath injection, and XML entity attacks to identify data exposure and server-side request forgery risks. |
@@ -167,7 +166,7 @@ Chaque `SKILL.md` porte un frontmatter YAML ; le champ `description` sert de dé
 | `detecting-api-enumeration-attacks` | Detect API enumeration attacks (BOLA/IDOR, OWASP API1:2023) by writing SIEM detection rules that flag sequential or UUID identifier iteration, parameter tampering, and mixed 200/401/403 response patterns from API gateway and WAF logs. Use w |
 | `detecting-broken-object-property-level-authorization` | Detect and test for OWASP API3:2023 Broken Object Property Level Authorization (BOPLA), covering excessive data exposure in API responses and mass assignment via injected request-body properties. Use when reviewing API responses/requests fo |
 | `detecting-shadow-api-endpoints` | Discover and inventory shadow API endpoints that operate outside documented OpenAPI/Swagger specs, using traffic analysis against API gateways (Kong, AWS API Gateway, Envoy), cloud configuration scanning, and source code repository mining f |
-| `exploiting-api-injection-vulnerabilities` | >- Tests API parameters, headers, and request bodies for injection flaws — SQL injection, NoSQL injection, OS command injection, LDAP injection, and SSRF — by crafting payloads tailored to the target backend to extract data, execute com |
+| `exploiting-api-injection-vulnerabilities` | >- Tests API parameters, headers, and request bodies for injection flaws — SQL injection, NoSQL injection, OS command injection, LDAP injection, and SSRF — by crafting payloads tailored to the target backend to extract data, execute command |
 | `exploiting-broken-function-level-authorization` | >- Tests APIs for Broken Function Level Authorization (OWASP API5:2023) by identifying admin and privileged endpoints, then reaching them with regular-user credentials via HTTP method switching, URL path manipulation, and parameter tamperin |
 | `exploiting-excessive-data-exposure-in-api` | >- Tests APIs for excessive data exposure (OWASP API3:2023) by intercepting raw API responses and comparing them against what the UI actually renders, looking for leaked PII, internal identifiers, debug data, or business-sensitive fields th |
 | `exploiting-jwt-algorithm-confusion-attack` | >- Exploits JWT algorithm confusion where the server's verification library trusts the alg named in the token header, by switching RS256 to HS256 (signing with the RSA public key as HMAC secret), setting alg to none, or injecting kid/jku/x5 |
@@ -182,7 +181,7 @@ Chaque `SKILL.md` porte un frontmatter YAML ; le champ `description` sert de dé
 | `performing-api-fuzzing-with-restler` | 'Uses Microsoft RESTler to perform stateful REST API fuzzing: compiles an OpenAPI/Swagger spec into a RESTler grammar, configures authentication, and runs test/fuzz-lean/fuzz modes that generate request sequences exercising producer-consume |
 | `performing-api-inventory-and-discovery` | 'Performs API inventory and discovery to identify all API endpoints in an organization''s environment including documented, undocumented, shadow, zombie, and deprecated APIs. The tester uses passive traffic analysis, active scanning, DNS en |
 | `performing-api-rate-limiting-bypass` | 'Tests API rate limiting for bypass vulnerabilities using Python (requests/aiohttp) and Burp Suite Turbo Intruder to manipulate headers (e.g. X-Forwarded-For spoofing), IPs, HTTP methods, API versions, and encodings, mapping findings to OWA |
-| `performing-api-security-testing-with-postman` | 'Uses Postman to build structured API security test collections covering the OWASP API Security Top 10—authentication bypass, authorization flaws, injection, and data exposure—with multi-role environments, automated test scripts, and OW |
+| `performing-api-security-testing-with-postman` | 'Uses Postman to build structured API security test collections covering the OWASP API Security Top 10—authentication bypass, authorization flaws, injection, and data exposure—with multi-role environments, automated test scripts, and OWASP  |
 | `performing-graphql-depth-limit-attack` | Execute and test GraphQL depth limit attacks using deeply nested recursive queries to identify denial-of-service vulnerabilities in GraphQL APIs. |
 | `performing-graphql-introspection-attack` | 'Performs GraphQL introspection attacks that extract the full API schema (types, queries, mutations, subscriptions, field definitions), map the attack surface, test query depth/complexity limits, and exploit GraphQL-specific weaknesses such |
 | `performing-jwt-none-algorithm-attack` | Execute and test the JWT none algorithm attack, crafting tokens with the alg header set to none using PyJWT and an intercepting proxy (Burp Suite/mitmproxy) to bypass signature verification and forge arbitrary claims. Use during authorized  |
@@ -231,17 +230,32 @@ Chaque `SKILL.md` porte un frontmatter YAML ; le champ `description` sert de dé
 
 ---
 
-## Packs optionnels (201 skills — activables via `install.sh --all` ou `--optional <groupe>`)
+## Packs optionnels (activables via `mcp-intruder-cli install --all` ou `--optional <groupe>`)
 
-| Groupe | Skills | Intérêt pour MCP-Intruder |
+| Groupe | Skills | Intérêt |
 |---|---|---|
-| `optional/bughunter` | 38 | Le reste des hunt-* : frameworks (Laravel/Next.js/Spring), k8s, captcha, brute-force, fintech-graphql, grpc… |
-| `optional/acs-ot-ics` | 29 | Modbus/DNP3/S7comm — **cible Modbus 502 déjà vue en engagement** |
-| `optional/acs-red-team` | 35 | AD/Kerberos/BloodHound/ADCS/C2 (Sliver/Havoc) |
-| `optional/acs-cloud` | 66 | AWS/Azure/GCP IAM, S3, GuardDuty, Pacu/ScoutSuite/CloudFox |
+| `optional/bughunter` | 38 | Le reste des hunt-* : frameworks (Laravel/Next.js/Spring), k8s, captcha, brute-force… |
+| `optional/acs-ot-ics` | 29 | Modbus/DNP3/S7comm — OT/ICS |
+| `optional/acs-red-team` | 35 | AD/Kerberos/BloodHound/ADCS/C2 |
+| `optional/acs-cloud` | 66 | AWS/Azure/GCP IAM, S3, Pacu/ScoutSuite/CloudFox |
 | `optional/acs-container` | 33 | Docker/K8s escape, Falco, Trivy, RBAC |
 
 ---
 
+## Tooling Rust (cli/)
+
+`cargo run --release --manifest-path cli/Cargo.toml -- <commande>`
+
+| Commande | Rôle |
+|---|---|
+| `install [--target DIR] [--all] [--optional G] [--dry-run]` | Déploie les skills (défaut `~/.claude/skills`) + commands slash |
+| `check-prereqs` | Exigences outils (exit 1 si un requis manque) |
+| `scan-secrets [--all] [--strict]` | Scan OPSEC — **à passer avant tout push** (règle AGENTS.md) |
+| `index` | Régénère ce fichier + skills-manifest.json |
+| `build --upstream DIR` | Reconstruit le bundle depuis les tarballs extraits |
+
+---
+
 ## Prérequis outils
-Voir [tools-requirements.md](tools-requirements.md) et vérifier avec `bash check_prereqs.sh` (à lancer sur la cible d'installation).
+
+Voir [tools-requirements.md](tools-requirements.md) et vérifier avec `mcp-intruder-cli check-prereqs` (à lancer sur la cible d'installation).

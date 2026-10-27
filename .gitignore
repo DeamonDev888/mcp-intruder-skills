@@ -1,3 +1,4 @@
 .upstream/
 .gen_tmp/
 *.tar.gz
+cli/target/

@@ -1,7 +1,7 @@
 # Exigences outils des skills adoptés — matrice & écart vs serveur Kali
 
 **Machine de référence :** `votre-serveur-kali` (Kali Rolling, <ip-serveur>) — source `MEMO-SERVEUR-KALI.md`.
-**À exécuter sur la cible :** `bash check_prereqs.sh` (exit 0 = requis OK).
+**À exécuter sur la cible :** `mcp-intruder-cli check-prereqs` (exit 0 = requis OK).
 
 ## 1. Outils REQUIS (Tier 1 non fonctionnel sans eux)
 
@@ -9,7 +9,7 @@
 |---|---|---|---|---|
 | curl | hunt-* (test primaire), ACS web | ✅ | — | préinstallé |
 | jq | evidence-hygiene, parsing JSON | ✅ (scripts serveur) | — | `apt install jq` |
-| python3 ≥ 3.9 | CLI cbh, helpers ACS | ✅ | — | préinstallé |
+| python3 ≥ 3.9 | helpers ACS embarqués dans les skills | ✅ | — | préinstallé |
 | git | clonage jwt_tool, MAJ bundle | ✅ | — | préinstallé |
 | dig / dnsutils | web2-recon, dns-enum-zone-transfer, MCP-Intruder dns | ✅ | — | préinstallé |
 | whois | OSINT, MCP-Intruder whois_audit | ✅ | — | préinstallé |
@@ -17,7 +17,7 @@
 | nmap | nmap-advanced, MCP-Intruder nmap_deep | ✅ | — | préinstallé |
 | nuclei | ACS web, BugHunter recon, MCP-Intruder nuclei_deep | ✅ | — | préinstallé |
 | ffuf | fuzzing routes, MCP-Intruder ffuf_audit (+ SecLists quickhits) | ✅ | — | préinstallé |
-| subfinder | web2-recon, cbh recon, MCP-Intruder subdomains | ✅ | — | préinstallé |
+| subfinder | web2-recon, MCP-Intruder subdomains | ✅ | — | préinstallé |
 | sqlmap | sqli (ACS), MCP-Intruder sqli_audit | ✅ | — | préinstallé |
 | nikto | web-app-scanning-nikto, MCP-Intruder nikto_deep | ✅ | — | préinstallé |
 | httpx (pd) | probe HTTP ACS/BugHunter, MCP-Intruder http_probe | ✅ pdhttpx | — | `apt install httpx` sinon go install PD |
