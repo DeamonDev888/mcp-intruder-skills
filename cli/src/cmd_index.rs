@@ -135,7 +135,7 @@ pub fn run(root: &Path) -> i32 {
     idx.push_str(&format!("├── bughunter/            Tier 1 ({bh1} skills) + commands/ (15) + licences MIT/CC-BY\n"));
     idx.push_str(&format!("├── acs/                  Tier 1 ({acs1} skills) + mappings/ (ATT&CK Navigator, NIST CSF, OWASP)\n"));
     idx.push_str("├── optional/             Packs opt-in (bughunter · acs-ot-ics · acs-red-team · acs-cloud · acs-container)\n");
-    idx.push_str("├── assets/               banner-mcp-intruder.png\n");
+    idx.push_str("├── assets/               banner-mcp-intruder.svg\n");
     idx.push_str("├── skills-manifest.json  Catalogue machine (id, source, catégorie, tier, description)\n");
     idx.push_str("└── INDEX.md              Ce catalogue\n```\n\n");
 

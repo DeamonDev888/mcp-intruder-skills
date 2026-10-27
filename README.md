@@ -1,4 +1,4 @@
-![MCP-Intruder Skills](assets/banner-mcp-intruder.png)
+![MCP-Intruder Skills](assets/banner-mcp-intruder.svg)
 
 # mcp-intruder-skills — Bundle d'adoption BugHunter + Anthropic-Cybersecurity-Skills
 

@@ -15,7 +15,7 @@ mcp-intruder-skills/
 ├── bughunter/            Tier 1 (45 skills) + commands/ (15) + licences MIT/CC-BY
 ├── acs/                  Tier 1 (94 skills) + mappings/ (ATT&CK Navigator, NIST CSF, OWASP)
 ├── optional/             Packs opt-in (bughunter · acs-ot-ics · acs-red-team · acs-cloud · acs-container)
-├── assets/               banner-mcp-intruder.png
+├── assets/               banner-mcp-intruder.svg
 ├── skills-manifest.json  Catalogue machine (id, source, catégorie, tier, description)
 └── INDEX.md              Ce catalogue
 ```
