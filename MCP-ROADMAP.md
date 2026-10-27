@@ -5,46 +5,35 @@ Le **serveur MCP** appartient au dépôt `mcp_intruder` (moteur Rust de scan, re
 une session dédiée). Cette page publie le plan, extraite de l'audit interne
 `AUDIT-OUTILS-MCP-SKILLS-2026-10-26.md` (§5-7) — document conservé en local.
 
-## État actuel du serveur MCP (`mcp_intruder`)
+## État actuel du serveur MCP (`mcp_intruder`) — ✅ P0 RÉALISÉ
 
-- Crate `litemcp 0.7.1` en place (Streamable HTTP, JSON-RPC géré par la crate) ; point d'entrée `mcp::build_server()`.
-- **1 seul outil exposé : `ping`.**
-- Bloquant P0 : le binaire `src/bin/mcp_server.rs` est référencé mais pas encore écrit ; aucun
-  module de scan branché sur `.tool(...)` ; zéro test MCP ; CHANGELOG sans entrée 0.6.0.
+- Crate `litemcp` en place (Streamable HTTP, JSON-RPC géré par la crate) — propulsée par
+  [LiteMCP](https://github.com/DeamonDev888/litemcp), la lib MCP la plus légère et la plus rapide.
+- `src/bin/mcp_server.rs` **écrit et publié** : transport Streamable HTTP (`POST /mcp`, bind
+  `127.0.0.1:7808`) + endpoint santé `GET /health`.
+- **21 outils exposés** : `ping`, `scan_target`, `scan_history`, `tools_diag`, `dns_audit`,
+  `tls_audit`, `http_audit`, `whois_audit`, `geo_locate`, `email_sec_audit`, `subdomains_audit`,
+  `crt_sh_lookup`, `waf_detect`, `tech_stack_audit`, `dnsrecon_audit`, `dns_hardening_audit`,
+  + plan de contrôle jobs asynchrones : `job_start`, `job_status`, `job_result`, `job_stop`, `job_list`.
 
-## P0 — rendre le serveur MCP fonctionnel
+## P0 — rendre le serveur MCP fonctionnel : ✅ FAIT
 
-1. Écrire `src/bin/mcp_server.rs` (addr/port en CLI, `.bind(addr).serve()` sur `build_server()`).
-2. Exposer les premiers outils MCP (chacun = 1 module existant, annotations `read_only`) :
-
-| Outil MCP | Source | Fonction |
-|---|---|---|
-| `ping` | `mcp/mod.rs` | sonde de disponibilité (existant) |
-| `dns_scan` | module `dns` | records A/AAAA/MX/NS/TXT/CAA/SOA/DS, SPF, DNSSEC |
-| `dns_hardening_scan` | module `dns_hardening` | open resolver, récursion, AXFR |
-| `port_scan` | module `ports` | 75 ports critiques + bannières |
-| `full_portscan` | module `full_portscan` | 65535 ports async natif |
-| `tls_audit` | module `tls` | chaîne X.509, ciphers, TLS 1.0-1.3 |
-| `http_headers_scan` | module `http` | headers sécurité + cookies |
-| `email_sec_scan` | module `email_sec` | SPF/DKIM/DMARC/MTA-STS/TLS-RPT/BIMI |
-| `subdomain_enum` | module `subdomains` | subfinder + fallback statique |
-| `crtsh_enum` | module `crt_sh` | Certificate Transparency |
-| `get_report` | `report/` | scan_id → JSON du rapport complet |
-| `history` | CLI `history` | historique des scans en DB |
-
-3. Transport : Streamable HTTP (par défaut) + stdio pour usage local type Claude Code.
-4. Tests MCP (initialize / tools/list / tools/call + erreurs).
+- ✅ `mcp_server.rs` écrit (bind + serve sur `build_server()`).
+- ✅ Modules de scan exposés comme outils MCP (lecture-seule) — 21 outils (voir ci-dessus).
+- ✅ Plan de contrôle jobs : exécutions longues en arrière-plan (scan complet, module lourd,
+  binaire d'impact en liste blanche) rendant un `job_id` immédiat.
+- ⬜ Transport stdio complémentaire (pour usage local type Claude Code hors HTTP) — à arbitrer.
+- ⬜ Tests MCP dédiés (initialize / tools/list / tools/call + erreurs) — à vérifier côté CI.
 
 ## P1 — élargir la surface MCP
 
-- Exposer les wrappers Kali : `waf_detect`, `nuclei_scan`, `nikto_scan`, `nmap_deep_scan`,
-  `ffuf_scan`, `http_probe`, `tech_stack_scan`, `web_endpoints_scan`, `vuln_audit`,
-  `diag_exposure_scan`, `sslscan_audit`, `brand_scan` (dnstwist), `whois_scan`, `dnsrecon_scan`,
-  `theharvester_scan`, `smb_audit`.
-- Exposer les bins d'impact : `chainx_run`, `cnametake_check`, `gkeyx_scan`, `spoofcheck`,
-  `subalive`, `surfx`, `envx`, `gitdump`, `lootx` (tous read-only, gates horaires conservés).
-- Mapping MITRE ATT&CK des catégories de findings + croisement CISA KEV.
-- CI minimale (clippy `-D warnings`, tests, tests MCP).
+- ✅ Wrappers Kali couverts par les 21 outils : `waf_detect`, `dnsrecon_audit`, `tech_stack_audit`,
+  `subdomains_audit`, `whois_audit`, `crt_sh_lookup`, `geo_locate`, `email_sec_audit`…
+- ✅ Bins d'impact : exécutables via `job_start` (`kind: bin`, liste blanche + `args`).
+- ⬜ `nuclei_scan`, `nikto_scan`, `nmap_deep_scan`, `ffuf_scan`, `http_probe` en outils dédiés
+  (aujourd'hui couverts via `scan_target`/`job_start` selon profil).
+- ⬜ Mapping MITRE ATT&CK des catégories de findings + croisement CISA KEV.
+- ⬜ CI minimale (clippy `-D warnings`, tests, tests MCP).
 
 ## P2 — couche cerveau (RÉALISÉ côté skills)
 
