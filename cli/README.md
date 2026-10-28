@@ -76,4 +76,5 @@ cli/
 ## Licences
 
 Code MIT (bundle DeamonDev888). Contenu des skills adoptés : MIT + CC BY 4.0 (BugHunter),
-Apache-2.0 (ACS) — licences conservées dans `bughunter/` et `acs/` (voir README racine).
+Apache-2.0 (ACS) — licences conservées dans `bughunter/` et `acs/`. Voir LICENSE et NOTICE
+à la racine du dépôt.

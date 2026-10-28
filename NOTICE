@@ -1,0 +1,23 @@
+NOTICE — attributions du bundle mcp-intruder-skills
+
+Le contenu propre de ce dépôt (tooling `cli/`, README, INDEX.md,
+MCP-ROADMAP.md, skills-manifest.json, tools-requirements.md, mappings
+racine, assets/) est sous licence MIT (voir LICENSE).
+
+Le bundle embarque une sélection curatée de deux référentiels tiers,
+dont les licences d'origine sont conservées dans chaque dossier :
+
+1. `acs/` — Anthropic Cybersecurity Skills
+   Licence : Apache-2.0 (voir acs/LICENSE).
+   Copyright : Anthropic PBC et contributeurs.
+
+2. `bughunter/` — BugHunter skills
+   Double licence : MIT pour le code (bughunter/LICENSE),
+   CC BY 4.0 pour le contenu documentaire des skills
+   (bughunter/LICENSE-CONTENT). Voir aussi bughunter/NOTICE.
+   Copyright : Sachin Sharma et contributeurs.
+
+Ces dossiers tiers sont redistribués tels quels (sans modification des
+licences). Toute réutilisation doit respecter les licences de chaque
+composant. Ce bundle n'est ni affilié à, ni approuvé par Anthropic ou
+les auteurs de BugHunter.
