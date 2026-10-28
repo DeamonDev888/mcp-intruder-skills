@@ -7,7 +7,7 @@ une session dédiée). Cette page publie le plan, extraite de l'audit interne
 
 ## État actuel du serveur MCP (`mcp_intruder`) — ✅ P0 RÉALISÉ
 
-- Crate `litemcp` en place (Streamable HTTP, JSON-RPC géré par la crate) — propulsée par
+- Crate `litemcp` **0.9.0** en place (Streamable HTTP, JSON-RPC géré par la crate) — propulsée par
   [LiteMCP](https://github.com/DeamonDev888/litemcp), la lib MCP la plus légère et la plus rapide.
 - `src/bin/mcp_server.rs` **écrit et publié** : transport Streamable HTTP (`POST /mcp`, bind
   `127.0.0.1:7808`) + endpoint santé `GET /health`.
@@ -23,7 +23,10 @@ une session dédiée). Cette page publie le plan, extraite de l'audit interne
 - ✅ Plan de contrôle jobs : exécutions longues en arrière-plan (scan complet, module lourd,
   binaire d'impact en liste blanche) rendant un `job_id` immédiat.
 - ⬜ Transport stdio complémentaire (pour usage local type Claude Code hors HTTP) — à arbitrer.
-- ⬜ Tests MCP dédiés (initialize / tools/list / tools/call + erreurs) — à vérifier côté CI.
+- ✅ Tests MCP dédiés : initialize / tools/list / tools/call + erreurs — dispatch en mémoire
+  (`ServerCore`, sans socket ni PostgreSQL), suite verte (152 tests lib, clippy `-D warnings`) ;
+  régressions dédiées : cible malformée refusée en `invalid_input` avant tout réseau,
+  `ping` strict (champ inconnu → -32602). Reste la CI comme exécuteur automatique.
 
 ## P1 — élargir la surface MCP
 
